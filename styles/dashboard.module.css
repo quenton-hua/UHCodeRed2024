@@ -1,0 +1,38 @@
+section.dashboard{
+    color:black;
+    display: flex;
+    flex-direction: column;
+}
+
+
+section.dashboard .cards{
+    padding: 20px;
+    gap:15px;
+    flex:1;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+
+.card{
+    aspect-ratio: 1;
+    background-color: white;
+    border-radius: 20px;
+
+box-shadow: 0px 3px 15px 0px rgba(0,0,0,0.15);
+}
+
+.card.createnew{
+    border: 3px dashed #959595; 
+    box-shadow: none;
+    display: flex;
+    color: #959595;
+    justify-content: center; /* Center items horizontally */
+    align-items: center; /* Center items vertically */
+    text-align: center;
+    cursor: pointer;
+}
+
+.card.createnew div p{
+    margin-bottom: 5px;
+}

@@ -1,5 +1,6 @@
 import Image from "next/image";
-import styles from "./page.module.css";
+import styles from "../styles/page.module.css";
+import { Download } from "akar-icons";
 
 export default function Home() {
   return (
@@ -25,6 +26,7 @@ export default function Home() {
               priority
             />
           </a>
+          <Download strokeWidth={2} size={36} />
         </div>
       </div>
 
