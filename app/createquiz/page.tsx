@@ -8,6 +8,7 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import axios from "axios";
 
 export default function CreateQuizPage() {
   const numQuestionsRef = useRef(1); // Using useRef to hold a numeric value, if needed
@@ -40,58 +41,132 @@ export default function CreateQuizPage() {
   ];
 
   return (
-    <div className={styles.createquiz}>
-      <TextField
-        id="filled-basic"
-        label="Quiz Title"
-        maxRows={4}
-        variant="filled"
-      />
-
-      <div className={styles.sliderDiv}>
-        <Slider
-          aria-label="Number of Questions"
-          defaultValue={1}
-          value={numQuestions} // Controlled component
-          onChange={handleSliderChange}
-          valueLabelDisplay="auto"
-          step={1}
-          min={1}
-          max={15}
-          valueLabelDisplay="auto"
-          marks={marks}
+    <section className={styles.createquiz}>
+      <div>
+        <TextField
+          id="filled-basic"
+          label="Quiz Title"
+          maxRows={4}
+          variant="filled"
+          style={{ width: "400px" }}
         />
       </div>
 
-      <FormControl variant="filled" sx={{ m: 1, minWidth: 150 }}>
-        <InputLabel id="demo-simple-select-filled-label">
-          Grade Level
-        </InputLabel>
-        <Select
-          labelId="demo-simple-select-filled-label"
-          id="demo-simple-select-filled"
-          value={age}
-          onChange={handleChange}
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={"e"}>K-5</MenuItem>
-          <MenuItem value={"m"}>6-8</MenuItem>
-          <MenuItem value={"h"}>9-12</MenuItem>
-          <MenuItem value={"C"}>College</MenuItem>
-        </Select>
-      </FormControl>
+      <div className={styles.numberofQuestions}>
+        <h4> Number of Questions</h4>
+        <div className={styles.sliderDiv}>
+          <Slider
+            aria-label="Number of Questions"
+            defaultValue={1}
+            value={numQuestions} // Controlled component
+            onChange={handleSliderChange}
+            valueLabelDisplay="auto"
+            step={1}
+            min={1}
+            max={15}
+            valueLabelDisplay="auto"
+            marks={marks}
+          />
+        </div>
+      </div>
+      <div>
+        <FormControl variant="filled" sx={{ minWidth: 150 }}>
+          <InputLabel id="demo-simple-select-filled-label">
+            Grade Level
+          </InputLabel>
+          <Select
+            labelId="demo-simple-select-filled-label"
+            id="demo-simple-select-filled"
+            value={age}
+            onChange={handleChange}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            <MenuItem value={"e"}>K-5</MenuItem>
+            <MenuItem value={"m"}>6-8</MenuItem>
+            <MenuItem value={"h"}>9-12</MenuItem>
+            <MenuItem value={"C"}>College</MenuItem>
+          </Select>
+        </FormControl>
+      </div>
 
-      <TextField
-        id="filled-basic"
-        label="Quiz Title"
-        multiline
-        rows={4}
-        variant="filled"
-      />
+      <div className={styles.fileupload}>
+        <button className={styles.uploadbutton}> Upload File</button>\<UploadFile />
+        <TextField
+          id="filled-textarea"
+          label="Quiz Content"
+          placeholder="Placeholder"
+          multiline
+          minRows={10}
+          variant="filled"
+          style={{ width: "600px" }}
+        />
+      </div>
 
+      <div>
+        <button className={styles.createbutton}>Create Quiz</button>
+      </div>
+    </section>
+  );
+}
 
+function UploadFile() {
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  // On file select (from the pop up)
+  const onFileChange = (event) => {
+    // Update the state
+    setSelectedFile(event.target.files[0]);
+  };
+
+  // On file upload (click the upload button)
+  console.log(selectedFile);
+  const onFileUpload = () => {
+    // Create an object of formData
+    const formData = new FormData();
+
+    // Update the formData object
+    formData.append("myFile", selectedFile, selectedFile.name);
+
+    // Details of the uploaded file
+    console.log(selectedFile);
+
+    // Request made to the backend api
+    // Send formData object
+    axios.post("api/uploadfile", formData);
+  };
+
+  // File content to be displayed after
+  // file upload is complete
+  const fileData = () => {
+    if (selectedFile) {
+      return (
+        <div>
+          <h2>File Details:</h2>
+          <p>File Name: {selectedFile.name}</p>
+          <p>File Type: {selectedFile.type}</p>
+          <p>
+            Last Modified:{" "}
+            {selectedFile.lastModifiedDate && selectedFile.lastModifiedDate.toDateString()}
+          </p>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <br />
+          <h4>Choose before Pressing the Upload button</h4>
+        </div>
+      );
+    }
+  };
+
+  return (
+    <div>
+      <input type="file" onChange={onFileChange} />
+      <button onClick={onFileUpload}> Upload File</button>
+      {fileData()}
     </div>
   );
 }

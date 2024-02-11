@@ -13,7 +13,9 @@
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.15.9",
     "akar-icons": "^1.9.30",
+    "axios": "^1.6.7",
     "next": "14.1.0",
+    "pdfjs-dist": "^4.0.379",
     "react": "^18",
     "react-dom": "^18"
   },

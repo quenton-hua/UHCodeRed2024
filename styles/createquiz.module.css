@@ -1,11 +1,38 @@
 .createquiz{
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 50px;
-    margin-bottom: 50px;
-    overflow-y: auto;
+    text-align: left;
+    padding-top: 50px;
+    padding-left: 40px;
+    padding-right: 20px;
+
+}
+
+
+.createquiz div{
+    margin-bottom: 10px;
+
+}
+
+
+.createquiz h4{
+    color:black;
+}
+
+
+.numberofQuestions{
+
+}
+
+.fileupload{
+    display: flex;
+    flex-direction: column;
+    
+
+}
+
+.uploadbutton{
+    width: 30%   ;
 
 }
 
@@ -13,4 +40,8 @@
 .sliderDiv{
     width: 300px;
 
+}
+
+.TEST{
+    color:black;
 }
