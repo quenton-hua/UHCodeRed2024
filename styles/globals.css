@@ -112,6 +112,22 @@ body {
   overflow-y: auto;
 }
 
+.modalbackdrop{
+  display: none;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+}
+
+.modalbackdrop.active{
+  display: block;
+
+}
+
+
+
 
 a {
   color: inherit;

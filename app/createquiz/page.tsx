@@ -13,6 +13,7 @@ import axios from "axios";
 export default function CreateQuizPage() {
   const numQuestionsRef = useRef(1); // Using useRef to hold a numeric value, if needed
   const [numQuestions, setNumQuestions] = useState(1); // Using useState for re-render
+  const [modalActive, setModalActive] = useState(false); // Using useState for re-render
   const [age, setAge] = React.useState("");
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -40,8 +41,31 @@ export default function CreateQuizPage() {
     },
   ];
 
+  function toggleModal() {
+    setModalActive(!modalActive);
+  }
+
   return (
     <section className={styles.createquiz}>
+      <div
+        className={`${styles.modalbackdrop} ${
+          modalActive ? styles.active : ""
+        }`}
+        onClick={toggleModal}
+      >
+        <div className={styles.loadingimage}>
+          <img src="/lightbulboff.png" alt="EduCraft Logo" />
+        </div>
+
+        <div className={styles.loadingimage}>
+          <img className={styles.lightbulbon} src="/lightbulbon.png" alt="EduCraft Logo" />
+        </div>
+
+        <div className={styles.quizreadytext}>
+            Your Quiz is Ready!
+        </div>
+        
+      </div>
       <div>
         <TextField
           id="filled-basic"
@@ -83,8 +107,13 @@ export default function CreateQuizPage() {
             <MenuItem value="">
               <em>None</em>
             </MenuItem>
-            <MenuItem value={"e"}>K-5</MenuItem>
-            <MenuItem value={"m"}>6-8</MenuItem>
+            <MenuItem value={"e"}>K</MenuItem>
+            <MenuItem value={"e"}>1</MenuItem>
+            <MenuItem value={"e"}>2</MenuItem>
+            <MenuItem value={"e"}>3</MenuItem>
+            <MenuItem value={"e"}>4</MenuItem>
+            <MenuItem value={"m"}>5</MenuItem>
+            <MenuItem value={"e"}>6</MenuItem>
             <MenuItem value={"h"}>9-12</MenuItem>
             <MenuItem value={"C"}>College</MenuItem>
           </Select>
@@ -92,7 +121,8 @@ export default function CreateQuizPage() {
       </div>
 
       <div className={styles.fileupload}>
-        <button className={styles.uploadbutton}> Upload File</button>\<UploadFile />
+        <button className={styles.uploadbutton}> Upload File</button>\
+        <UploadFile />
         <TextField
           id="filled-textarea"
           label="Quiz Content"
@@ -105,7 +135,9 @@ export default function CreateQuizPage() {
       </div>
 
       <div>
-        <button className={styles.createbutton}>Create Quiz</button>
+        <button className={styles.createbutton} onClick={toggleModal}>
+          Create Quiz
+        </button>
       </div>
     </section>
   );
@@ -148,7 +180,8 @@ function UploadFile() {
           <p>File Type: {selectedFile.type}</p>
           <p>
             Last Modified:{" "}
-            {selectedFile.lastModifiedDate && selectedFile.lastModifiedDate.toDateString()}
+            {selectedFile.lastModifiedDate &&
+              selectedFile.lastModifiedDate.toDateString()}
           </p>
         </div>
       );
